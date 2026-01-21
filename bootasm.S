@@ -10,6 +10,7 @@
 .code16                       # Assemble for 16-bit mode
 .globl start
 start:
+#关闭中断
   cli                         # BIOS enabled interrupts; disable
 
   # Zero data segment registers DS, ES, and SS.
@@ -38,8 +39,10 @@ seta20.2:
 
   # Switch from real to protected mode.  Use a bootstrap GDT that makes
   # virtual addresses map directly to physical addresses so that the
-  # effective memory map doesn't change during the transition.
+  # effective memory map doesn't change during the transition
+# 加载全局描述符表 (GDT)，准备从实模式切到保护模式.
   lgdt    gdtdesc
+   # 设置 CR0 寄存器的 PE 位，开启保护模式
   movl    %cr0, %eax
   orl     $CR0_PE, %eax
   movl    %eax, %cr0

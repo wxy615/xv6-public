@@ -47,10 +47,10 @@ entry:
   movl    %cr4, %eax
   orl     $(CR4_PSE), %eax
   movl    %eax, %cr4
-  # Set page directory
+ # 加载初始页表的物理地址到 CR3 寄存器
   movl    $(V2P_WO(entrypgdir)), %eax
   movl    %eax, %cr3
-  # Turn on paging.
+  # 设置 CR0 寄存器的 PG 位，正式开启分页机制
   movl    %cr0, %eax
   orl     $(CR0_PG|CR0_WP), %eax
   movl    %eax, %cr0
