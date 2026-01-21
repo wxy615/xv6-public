@@ -49,3 +49,22 @@ will need to install a cross-compiler gcc suite capable of producing
 x86 ELF binaries (see https://pdos.csail.mit.edu/6.828/).
 Then run "make TOOLPREFIX=i386-jos-elf-". Now install the QEMU PC
 simulator and run "make qemu".
+
+
+一、运行环境与结果
+运行环境: Ubuntu (WSL) + QEMU
+运行命令: `make clean && make qemu-nox`
+运行结果: 系统成功启动，并在内核进入时正确打印可视化信息：[KERNEL] main() started init: starting sh $
+二、xv6 启动流程说明
+通过本次实验对核心代码的阅读与注释，我总结 xv6 的启动流程如下：
+1. 引导阶段 (Bootasm.S): CPU 从 16 位实模式切换到 32 位保护模式，初始化段寄存器。
+2. 加载阶段 (Bootmain.c): 引导程序读取磁盘上的 ELF 格式内核镜像，并将各段加载到内存指定位置。
+3. 入口阶段 (Entry.S): 开启页表映射，将内核从物理低地址映射到虚拟高地址，并跳转到 `main` 函数。
+4. 初始化阶段 (Main.c): 内核完成内存分配、驱动程序、中断向量、多核启动等初始化，最后启动第一个用户进程 `init`。
+ 三、实验总结
+1. Commit 记录: 仓库包含 3 次以上有意义的 Commit，涵盖了环境修复、功能开发及代码注释。
+2. 可视化实现: 成功在内核关键节点插入 `cprintf` 打印，直观验证了内核的加载与运行。
+3. 心得体会: 
+ - 深刻理解了引导程序 512 字节的限制，学习了如何通过硬件端口直接进行打印。
+ - 掌握了 GitHub Token 的使用以及远程仓库的管理。
+ - 通过对汇编代码的注释，理清了计算机从加电到进入操作系统的核心步骤。
