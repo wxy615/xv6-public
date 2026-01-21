@@ -1,4 +1,4 @@
-// Boot loader.
+     // Boot loader.
 //
 // Part of the boot block, along with bootasm.S, which calls bootmain().
 // bootasm.S has put the processor into protected 32-bit mode.
@@ -11,9 +11,9 @@
 #include "memlayout.h"
 
 #define SECTSIZE  512
-
+// 向串口发送单个字符
+// 向串口发送字符串
 void readseg(uchar*, uint, uint);
-
 void
 bootmain(void)
 {
@@ -43,6 +43,7 @@ bootmain(void)
 
   // Call the entry point from the ELF header.
   // Does not return!
+ 
   entry = (void(*)(void))(elf->entry);
   entry();
 }

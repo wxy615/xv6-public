@@ -37,7 +37,7 @@ multiboot_header:
 # By convention, the _start symbol specifies the ELF entry point.
 # Since we haven't set up virtual memory yet, our entry point is
 # the physical address of 'entry'.
-.globl _start
+.globl _start #这是内核入口点
 _start = V2P_WO(entry)
 
 # Entering xv6 on boot processor, with paging off.
