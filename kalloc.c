@@ -83,12 +83,13 @@ char*
 kalloc(void)
 {
   struct run *r;
-
   if(kmem.use_lock)
     acquire(&kmem.lock);
   r = kmem.freelist;
-  if(r)
+  if(r){
+  cprintf("[MEM] alloc page at %p\n", r);
     kmem.freelist = r->next;
+  }
   if(kmem.use_lock)
     release(&kmem.lock);
   return (char*)r;
