@@ -73,6 +73,7 @@ ls(char *path)
 int
 main(int argc, char *argv[])
 {
+  printf(1, "[USER] calling write in ls...\n");
   int i;
 
   if(argc < 2){
